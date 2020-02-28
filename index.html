@@ -1,7 +1,18 @@
 <html>
-    <head><title>Minimum Spending Calculator</title></head>
+    <head>
+        <title>Minimum Spending Calculator</title>
+        <style>
+            .container {
+                margin: 50px auto 0 auto;
+                width: 350px;
+            }
+            .container, .container input {
+                text-align: center;
+            }
+        </style>
+    </head>
     <body>
-        <div style="margin: 50px auto 0 auto; width: 350px">
+        <div class="container">
             <form action="javascript:void(0)">
                 <h2>Minimum Spending Calculator</h2>
                 <div style="margin: 0 auto; width: 200px"><label style="text-align:center" for="persentase">Percent of Discount</label><br/><input type="text" id="persentase" /> </div>
@@ -9,14 +20,13 @@
                 <div style="margin: 5px auto; width: 100px"><input type="submit" id="calculate" value="Calculate" onclick="startCalculate()" /></div>
                 <div id="result" style="display:none; margin-top: 10px">To get max discount..<br/>
                     Spend at least: <span id="spend"></span><br/>
-                    Total Cost: <span id="cost"></span>
                 </div>
             </form>
         </div>
 
         <script>
             function startCalculate() {
-                let incrementValue = 100, // ngira-ngira aja haha
+                let incrementValue = 100, // 100 adalah nilai uang Rp terkecil
                     persentase = parseInt(document.getElementById("persentase").value) / 100,
                     max = parseInt(document.getElementById("max").value.replace(/\./g, '')),
                     minimumSpend = max,
@@ -27,10 +37,8 @@
                     current = minimumSpend * persentase;
                 }
 
-                let cost = minimumSpend - max;
                 document.getElementById("result").style["display"] = "block";
                 document.getElementById("spend").innerHTML = formatPrice(minimumSpend);
-                document.getElementById("cost").innerHTML = formatPrice(cost);
             }
 
             function unformatPriceOnInput(elementId) {

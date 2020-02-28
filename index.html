@@ -2,6 +2,9 @@
     <head>
         <title>Minimum Spending Calculator</title>
         <style>
+            body {
+                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+            }
             .container {
                 margin: 50px auto 0 auto;
                 width: 350px;
@@ -14,10 +17,18 @@
     <body>
         <div class="container">
             <form action="javascript:void(0)">
-                <h2>Minimum Spending Calculator</h2>
-                <div style="margin: 0 auto; width: 200px"><label style="text-align:center" for="persentase">Percent of Discount</label><br/><input type="text" id="persentase" /> </div>
-                <div style="margin: 0 auto; width: 200px"><label style="text-align:center" for="max">Max Discount</label><br/><input type="text" id="max" onfocusin="unformatPriceOnInput(this.id)" onfocusout="formatPriceOnInput(this.id)" /></div>
-                <div style="margin: 5px auto; width: 100px"><input type="submit" id="calculate" value="Calculate" onclick="startCalculate()" /></div>
+                <h2>How to Get Max Discount</h2>
+                <div style="margin: 0 auto; width: 200px">
+                    <label style="text-align:center" for="persentase">Percent of Discount</label><br/>
+                    <input type="text" id="persentase" placeholder="20" />
+                </div>
+                <div style="margin: 0 auto; width: 200px">
+                    <label style="text-align:center" for="max">Max Discount</label><br/>
+                    <input type="text" id="max" placeholder="1000000" onfocusin="unformatPriceOnInput(this.id)" onfocusout="formatPriceOnInput(this.id)" />
+                </div>
+                <div style="margin: 5px auto; width: 100px">
+                    <input type="submit" id="calculate" value="Calculate" onclick="startCalculate()" />
+                </div>
                 <div id="result" style="display:none; margin-top: 10px">To get max discount..<br/>
                     Spend at least: <span id="spend"></span><br/>
                 </div>

@@ -20,7 +20,7 @@
                 text-align: center;
                 font-size: 1rem;
             }
-            button {
+            .my-button {
                 font-weight: 400;
                 line-height: 1.5;
                 color: #fff;
@@ -30,6 +30,7 @@
                 vertical-align: middle;
                 padding: 0.375rem 0.75rem;
                 font-size: 1rem;
+                border: 1px solid transparent;
                 border-radius: 0.25rem;
                 cursor: pointer;
             }
@@ -43,6 +44,17 @@
                 border-radius: 10px;
                 background-color: #fff;
             }
+            .unit {
+                position: absolute;
+                right: 0.5;
+                top: 0.5;
+                padding: 5.7px 10px;
+                font-weight: bold;
+                border: inset 2px black;
+                background: #a4a4a4;
+                border-top-right-radius: 0.25rem;
+                border-bottom-right-radius: 0.25rem;
+            }
             #result {
                 text-align: center;
                 margin-top: 10px;
@@ -55,6 +67,18 @@
                 margin-top: 5px;
                 display: block;
             }
+
+            /* remove spinner on number input in browser: Chrome, Safari, Edge, Opera */
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            /* remove spinner on number input in browser: Firefox */
+            input[type=number] {
+                -moz-appearance: textfield;
+            }
         </style>
     </head>
     <body>
@@ -62,10 +86,13 @@
             <div class="card">
                 <h2>How to Get Max Discount</h2>
                 <label for="persentase">Percent of Discount</label>
-                <input type="text" id="persentase" placeholder="20" />
+                <div class="input-group" style="position: relative">
+                    <span class="unit">%</span>
+                    <input type="number" id="persentase" placeholder="20" />
+                </div>
                 <label for="max">Max Discount</label>
-                <input type="text" id="max" placeholder="1000000" onfocusin="unformatPriceOnInput(this.id)" onfocusout="formatPriceOnInput(this.id)" />
-                <button onclick="startCalculate()">Calculate</button>
+                <input type="number" id="max" placeholder="1000000" onfocusin="unformatPriceOnInput(this.id)" onfocusout="formatPriceOnInput(this.id)" />
+                <button class="my-button" onclick="startCalculate()">Calculate</button>
                 <div id="result">
                     To get max discount, spend at least:<br/>
                     <span id="spend"></span>

@@ -1,38 +1,76 @@
 <html>
     <head>
         <title>Minimum Spending Calculator</title>
+        <!-- handle responsive view -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
             body {
-                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+                background-color: #F4F4F4;
+                padding-top: 50px;
+                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             }
-            .container {
-                margin: 50px auto 0 auto;
-                width: 350px;
+            label {
+                margin-bottom: 5px;
             }
-            .container, .container input {
+            input {
+                margin-bottom: 10px;
+                width: 200px;
+                padding: 0.375rem 0.75rem;
+                border-radius: 0.25rem;
                 text-align: center;
+                font-size: 1rem;
+            }
+            button {
+                font-weight: 400;
+                line-height: 1.5;
+                color: #fff;
+                background-color: #0d6efd;
+                border-color: #0d6efd;
+                text-decoration: none;
+                vertical-align: middle;
+                padding: 0.375rem 0.75rem;
+                font-size: 1rem;
+                border-radius: 0.25rem;
+                cursor: pointer;
+            }
+            .card {
+                display: flex;
+                width: 300px;
+                margin: 0 auto;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 10px 30px 10px;
+                border-radius: 10px;
+                background-color: #fff;
+            }
+            #result {
+                text-align: center;
+                margin-top: 10px;
+                display: none;
+            }
+            #spend {
+                font-weight: bold;
+                font-weight: bold;
+                font-size: x-large;
+                margin-top: 5px;
+                display: block;
             }
         </style>
     </head>
     <body>
         <div class="container">
-            <form action="javascript:void(0)">
+            <div class="card">
                 <h2>How to Get Max Discount</h2>
-                <div style="margin: 0 auto; width: 200px">
-                    <label style="text-align:center" for="persentase">Percent of Discount</label><br/>
-                    <input type="text" id="persentase" placeholder="20" />
+                <label for="persentase">Percent of Discount</label>
+                <input type="text" id="persentase" placeholder="20" />
+                <label for="max">Max Discount</label>
+                <input type="text" id="max" placeholder="1000000" onfocusin="unformatPriceOnInput(this.id)" onfocusout="formatPriceOnInput(this.id)" />
+                <button onclick="startCalculate()">Calculate</button>
+                <div id="result">
+                    To get max discount, spend at least:<br/>
+                    <span id="spend"></span>
                 </div>
-                <div style="margin: 0 auto; width: 200px">
-                    <label style="text-align:center" for="max">Max Discount</label><br/>
-                    <input type="text" id="max" placeholder="1000000" onfocusin="unformatPriceOnInput(this.id)" onfocusout="formatPriceOnInput(this.id)" />
-                </div>
-                <div style="margin: 5px auto; width: 100px">
-                    <input type="submit" id="calculate" value="Calculate" onclick="startCalculate()" />
-                </div>
-                <div id="result" style="display:none; margin-top: 10px">To get max discount..<br/>
-                    Spend at least: <span id="spend"></span><br/>
-                </div>
-            </form>
+            </div>
         </div>
 
         <script>

@@ -61,10 +61,13 @@
                     top: 0;   
                 }
             }
-            #result {
+            #result, #error {
                 text-align: center;
                 margin-top: 10px;
                 display: none;
+            }
+            #error {
+                color: red;
             }
             #spend {
                 font-weight: bold;
@@ -88,30 +91,43 @@
         </style>
     </head>
     <body>
-        <div class="container">
+        <form onsubmit="startCalculate(event)">
             <div class="card">
-                <h2>How to Get Max Discount</h2>
+            <h2>How to Get Max Discount</h2>
                 <label for="persentase">Percent of Discount</label>
                 <div class="input-group" style="position: relative">
                     <span class="unit">%</span>
-                    <input type="number" id="persentase" placeholder="20" />
+                    <input type="text" id="persentase" placeholder="e.g. 20" oninput="removeNonNumeric(this.id)" />
                 </div>
                 <label for="max">Max Discount</label>
-                <input type="number" id="max" placeholder="1000000" onfocusin="unformatPriceOnInput(this.id)" onfocusout="formatPriceOnInput(this.id)" />
-                <button class="my-button" onclick="startCalculate()">Calculate</button>
+                <input type="text" id="max" placeholder="e.g. 1000000" onfocusin="unformatPrice(this.id)" onfocusout="formatPrice(this.id)" oninput="unformatPrice(this.id)" />
+                <button type="submit" class="my-button">Calculate</button>
+                <div id="error">
+                    Invalid value!
+                </div>
                 <div id="result">
                     To get max discount, spend at least:<br/>
                     <span id="spend"></span>
                 </div>
             </div>
-        </div>
+        </form>
 
         <script>
-            function startCalculate() {
-                let incrementValue = 100, // 100 adalah nilai uang Rp terkecil
+            function startCalculate(e) {
+                e.preventDefault();
+                document.getElementById("error").style["display"] = "none";
+                document.getElementById("result").style["display"] = "none";
+
+                const incrementValue = 100, // 100 adalah nilai uang Rp terkecil
                     persentase = parseInt(document.getElementById("persentase").value) / 100,
-                    max = parseInt(document.getElementById("max").value.replace(/\./g, '')),
-                    minimumSpend = max,
+                    max = parseInt(document.getElementById("max").value.replace(/\./g, ''));
+
+                if (isNaN(persentase) || persentase <= 0 || isNaN(max) || max <= 0) {
+                    document.getElementById("error").style["display"] = "block";
+                    return;
+                }
+
+                let minimumSpend = max,
                     current = minimumSpend * persentase;
 
                 while (current < max) {
@@ -120,22 +136,29 @@
                 }
 
                 document.getElementById("result").style["display"] = "block";
-                document.getElementById("spend").innerHTML = formatPrice(minimumSpend);
+                document.getElementById("spend").innerHTML = addDelimiter(minimumSpend);
             }
-
-            function unformatPriceOnInput(elementId) {
+            function removeNonNumeric(elementId) {
                 let val = document.getElementById(elementId).value;
-                val = val.replace(/\./g, '');
+                val = val.toString().replace(/[^0-9]/g, '');
                 document.getElementById(elementId).value = val;
             }
-            function formatPriceOnInput(elementId) {
-                let maxDec = 2
+            function unformatPrice(elementId) {
                 let val = document.getElementById(elementId).value;
-                val = formatPrice(val);
+                val = numberAndCommaOnly(val);
                 document.getElementById(elementId).value = val;
             }
-            function formatPrice(val) {
-                val = val.toString().replace(/[^0-9,]/g, '').replace(/\./g, '');
+            function formatPrice(elementId) {
+                let val = document.getElementById(elementId).value;
+                val = addDelimiter(val);
+                document.getElementById(elementId).value = val;
+            }
+            function numberAndCommaOnly(val) {
+                return val.toString().replace(/[^0-9,]/g, '')
+            }
+            function addDelimiter(val) {
+                const maxDec = 2
+                val = numberAndCommaOnly(val);
                 if (val.includes(',')) {
                     let arr = val.split(',');
                     arr = [arr[0], arr[1]]; // mencegah koma berlebih
